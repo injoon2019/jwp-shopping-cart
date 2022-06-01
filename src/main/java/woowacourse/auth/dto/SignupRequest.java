@@ -1,5 +1,6 @@
 package woowacourse.auth.dto;
 
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,15 +10,15 @@ import woowacourse.auth.domain.Customer;
 @AllArgsConstructor
 @Builder
 public class SignupRequest {
+
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
+    @NotBlank
     private String nickname;
 
     public Customer toEntity() {
-        return Customer.builder()
-                .email(email)
-                .password(password)
-                .nickname(nickname)
-                .build();
+        return new Customer(email, nickname, password);
     }
 }

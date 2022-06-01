@@ -57,8 +57,8 @@ public class CustomerAcceptanceTest extends AcceptanceTest {
 
         SignupRequest signupRequest = SignupRequest.builder()
                 .email(email)
-                .nickname(invalidPassword)
-                .password(password)
+                .nickname(nickname)
+                .password(invalidPassword)
                 .build();
 
         ExtractableResponse<Response> response = httpPost("/customers", signupRequest);
@@ -72,8 +72,8 @@ public class CustomerAcceptanceTest extends AcceptanceTest {
 
         SignupRequest signupRequest = SignupRequest.builder()
                 .email(email)
-                .nickname(password)
-                .password(invalidNickname)
+                .nickname(invalidNickname)
+                .password(password)
                 .build();
 
         ExtractableResponse<Response> response = httpPost("/customers", signupRequest);

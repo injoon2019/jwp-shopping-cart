@@ -30,11 +30,7 @@ public class CustomerDaoTest {
     @Test
     void 회원을_저장한다() {
         // given
-        Customer customer = Customer.builder()
-                .email(email)
-                .nickname(nickname)
-                .password(password)
-                .build();
+        Customer customer = new Customer(email, nickname, password);
 
         // when
         Customer saved = customerDao.save(customer);
