@@ -3,6 +3,7 @@ package woowacourse.auth.ui;
 import java.net.URI;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +29,11 @@ public class CustomerController {
         Customer customer = customerService.signUp(request);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + customer.getId()).build().toUri();
         return ResponseEntity.created(uri).body(new SignupResponse(customer));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> signOut() {
+        //Customer customer = customerService.signUp(request);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -19,6 +19,7 @@ import woowacourse.auth.application.AuthService;
 import woowacourse.auth.application.CustomerService;
 import woowacourse.auth.domain.Customer;
 import woowacourse.auth.dto.SignupRequest;
+import woowacourse.auth.support.JwtTokenProvider;
 
 @WebMvcTest(CustomerController.class)
 class CustomerControllerTest {
@@ -34,6 +35,9 @@ class CustomerControllerTest {
 
     @MockBean
     private AuthService authService;
+
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
 
     @Test
     void 회원가입_요청을_정상적으로_처리한다() throws Exception {

@@ -1,5 +1,6 @@
 package woowacourse.auth.dao;
 
+import java.util.Map;
 import java.util.Optional;
 import javax.sql.DataSource;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -39,6 +40,11 @@ public class CustomerDao {
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    public boolean existsByEmail(String email) {
+        String sql = "SELECT EXISTS (SELECT * FROM customer where email = :email)";
+        return jdbcTemplate.queryForObject(sql, Map.of("email", email), Boolean.class);
     }
 
     private RowMapper<Customer> customerRowMapper() {

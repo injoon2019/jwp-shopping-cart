@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import woowacourse.auth.application.AuthService;
 import woowacourse.auth.dto.TokenRequest;
 import woowacourse.auth.dto.TokenResponse;
+import woowacourse.auth.support.JwtTokenProvider;
 
 @WebMvcTest(AuthController.class)
 @DisplayName("인증에 대한 기능")
@@ -35,6 +36,9 @@ class AuthControllerTest {
 
     @MockBean
     private AuthService authService;
+
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
 
     @Test
     void 아이디와_비밀번호가_일치하면_토큰을_발급한다() throws Exception {
@@ -74,5 +78,4 @@ class AuthControllerTest {
                 .content(jsonRequest))
                 .andExpect(status().isBadRequest());
     }
-
 }

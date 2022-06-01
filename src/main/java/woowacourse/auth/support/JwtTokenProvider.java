@@ -28,7 +28,8 @@ public class JwtTokenProvider {
                 .setSubject(payload)
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(key, SignatureAlgorithm.HS256)                .compact();
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public String getPayload(String token) {
