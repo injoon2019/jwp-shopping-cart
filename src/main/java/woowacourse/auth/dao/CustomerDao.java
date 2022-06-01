@@ -47,6 +47,11 @@ public class CustomerDao {
         return jdbcTemplate.queryForObject(sql, Map.of("email", email), Boolean.class);
     }
 
+    public void deleteById(Long id) {
+        String sql = "DELETE FROM customer where id = :id";
+        jdbcTemplate.update(sql, Map.of("id", id));
+    }
+
     private RowMapper<Customer> customerRowMapper() {
         return (resultSet, rowNum) -> {
             Long id = resultSet.getLong("id");

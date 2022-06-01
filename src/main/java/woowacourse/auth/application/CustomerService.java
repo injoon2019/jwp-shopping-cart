@@ -34,4 +34,8 @@ public class CustomerService {
         return customerDao.findByEmail(email)
                 .orElseThrow(NoSuchCustomerException::new);
     }
+
+    public void signOut(Customer customer) {
+        customerDao.deleteById(customer.getId());
+    }
 }

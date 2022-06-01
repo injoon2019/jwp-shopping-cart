@@ -1,5 +1,6 @@
 package woowacourse.auth.dao;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static woowacourse.auth.Fixture.email;
@@ -8,6 +9,7 @@ import static woowacourse.auth.Fixture.password;
 
 import java.util.Optional;
 import javax.sql.DataSource;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,5 +58,19 @@ public class CustomerDaoTest {
 
         // then
         assertThat(found.get().getEmail()).isEqualTo(email);
+    }
+
+    @Test
+    void 회원을_삭제한다() {
+        // given
+        Customer customer = new Customer(email, nickname, password);
+        Customer saved = customerDao.save(customer);
+
+        // when
+        customerDao.deleteById(saved.getId());
+
+        // then
+        Optional<Customer> found = customerDao.findByEmail(customer.getEmail());
+        assertThat(found).isEmpty();
     }
 }

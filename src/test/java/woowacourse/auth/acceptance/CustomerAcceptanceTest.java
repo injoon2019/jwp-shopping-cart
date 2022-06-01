@@ -95,4 +95,16 @@ public class CustomerAcceptanceTest extends AcceptanceTest {
         // then
         assertThat(signoutResponse.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
+
+    @Test
+    void 토큰이_있는_경우_회원을_조회할_수_있다() {
+        // given
+        httpPost("/customers", signupRequest);
+
+        // when
+        ExtractableResponse<Response> signoutResponse = deleteWithToken("/customers", "invalidToken");
+
+        // then
+        assertThat(signoutResponse.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+    }
 }

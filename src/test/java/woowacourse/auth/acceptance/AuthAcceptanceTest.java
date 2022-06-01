@@ -26,9 +26,6 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
         // when
         ExtractableResponse<Response> response = httpPost("/auth/login", tokenRequest);
-        System.out.println("==============");
-        System.out.println(response.jsonPath().getString("nickname"));
-        System.out.println("==============");
 
         // then
         String accessToken = response.jsonPath().getString("accessToken");
