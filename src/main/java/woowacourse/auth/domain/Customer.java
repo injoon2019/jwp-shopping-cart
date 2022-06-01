@@ -26,6 +26,10 @@ public class Customer {
         this.password = Password.of(password);
     }
 
+    public boolean isSamePassword(String password) {
+        return this.password.getValue().equals(password);
+    }
+
     public String getEmail() {
         return email.getValue();
     }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import woowacourse.auth.dao.CustomerDao;
 import woowacourse.auth.domain.Customer;
 import woowacourse.auth.dto.SignupRequest;
+import woowacourse.auth.exceptions.NoSuchCustomerException;
 
 @Service
 public class CustomerService {
@@ -17,5 +18,10 @@ public class CustomerService {
     public Customer signUp(SignupRequest signupRequest) {
         Customer customer = signupRequest.toEntity();
         return customerDao.save(customer);
+    }
+
+    public Customer findCustomer(String email) {
+        return customerDao.findByEmail(email)
+                .orElseThrow(NoSuchCustomerException::new);
     }
 }

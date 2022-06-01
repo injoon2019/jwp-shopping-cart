@@ -1,7 +1,11 @@
 package woowacourse.auth.dao;
 
+import java.util.Optional;
 import javax.sql.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -25,5 +29,25 @@ public class CustomerDao {
         long id = jdbcInsert.executeAndReturnKey(source).longValue();
 
         return new Customer(id, customer.getEmail(), customer.getNickname(), customer.getPassword());
+    }
+
+    public Optional<Customer> findByEmail(String email) {
+        String sql = "SELECT id, email, nickname, password FROM customer WHERE email = :email";
+        SqlParameterSource parameters = new MapSqlParameterSource("email", email);
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, parameters, customerRowMapper()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    private RowMapper<Customer> customerRowMapper() {
+        return (resultSet, rowNum) -> {
+            Long id = resultSet.getLong("id");
+            String email = resultSet.getString("email");
+            String nickname = resultSet.getString("nickname");
+            String password = resultSet.getString("password");
+            return new Customer(id, email, nickname, password);
+        };
     }
 }

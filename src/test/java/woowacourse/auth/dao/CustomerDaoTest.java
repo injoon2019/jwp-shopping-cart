@@ -6,6 +6,7 @@ import static woowacourse.auth.Fixture.email;
 import static woowacourse.auth.Fixture.nickname;
 import static woowacourse.auth.Fixture.password;
 
+import java.util.Optional;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,5 +43,18 @@ public class CustomerDaoTest {
                 () -> assertThat(saved.getPassword()).isEqualTo(password),
                 () -> assertThat(saved.getNickname()).isEqualTo(nickname)
         );
+    }
+
+    @Test
+    void 회원을_이메일로_조회한다() {
+        // given
+        Customer customer = new Customer(email, nickname, password);
+        Customer saved = customerDao.save(customer);
+
+        // when
+        Optional<Customer> found = customerDao.findByEmail(saved.getEmail());
+
+        // then
+        assertThat(found.get().getEmail()).isEqualTo(email);
     }
 }

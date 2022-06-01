@@ -1,46 +1,58 @@
 package woowacourse.auth.acceptance;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static woowacourse.auth.Fixture.email;
+import static woowacourse.auth.Fixture.password;
+import static woowacourse.auth.Fixture.signupRequest;
+import static woowacourse.auth.Fixture.tokenRequest;
+import static woowacourse.utils.RestAssuredUtil.httpPost;
+
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
+import org.springframework.http.HttpStatus;
+import woowacourse.auth.dto.TokenRequest;
 import woowacourse.shoppingcart.acceptance.AcceptanceTest;
 
-@DisplayName("인증 관련 기능")
+@DisplayName("인증 관련 인수테스트")
 public class AuthAcceptanceTest extends AcceptanceTest {
-    @DisplayName("Bearer Auth 로그인 성공")
     @Test
-    void myInfoWithBearerAuth() {
+    void 아이디와_비밀번호가_일치하면_토큰을_발급한다() {
         // given
-        // 회원이 등록되어 있고
-        // id, password를 사용해 토큰을 발급받고
+        httpPost("/customers", signupRequest);
 
         // when
-        // 발급 받은 토큰을 사용하여 내 정보 조회를 요청하면
+        ExtractableResponse<Response> response = httpPost("/auth/login", tokenRequest);
 
         // then
-        // 내 정보가 조회된다
+        assertThat(response.jsonPath().getString("accessToken")).isNotNull();
     }
 
-    @DisplayName("Bearer Auth 로그인 실패")
     @Test
-    void myInfoWithBadBearerAuth() {
+    void 아이디가_일치하지_않으면_토큰을_발급하지_않는다() {
         // given
-        // 회원이 등록되어 있고
+        httpPost("/customers", signupRequest);
 
         // when
-        // 잘못된 id, password를 사용해 토큰을 요청하면
+        TokenRequest invalidTokenRequest = new TokenRequest("incorretEmail@gmail.com", password);
+        ExtractableResponse<Response> response = httpPost("/auth/login", invalidTokenRequest);
 
         // then
-        // 토큰 발급 요청이 거부된다
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
-    @DisplayName("Bearer Auth 유효하지 않은 토큰")
     @Test
-    void myInfoWithWrongBearerAuth() {
+    void 비밀번호가_일치하지_않으면_토큰을_발급하지_않는다() {
+        // given
+        httpPost("/customers", signupRequest);
+
         // when
-        // 유효하지 않은 토큰을 사용하여 내 정보 조회를 요청하면
+        TokenRequest invalidTokenRequest = new TokenRequest(email, "incorrectPassword!1");
+        ExtractableResponse<Response> response = httpPost("/auth/login", invalidTokenRequest);
 
         // then
-        // 내 정보 조회 요청이 거부된다
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
+
 }
