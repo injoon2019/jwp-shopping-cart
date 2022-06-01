@@ -13,7 +13,7 @@ import woowacourse.shoppingcart.exception.NotInCustomerCartItemException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+//@Service
 @Transactional(rollbackFor = Exception.class)
 public class CartService {
 

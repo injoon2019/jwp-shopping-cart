@@ -1,5 +1,6 @@
 package woowacourse.auth.config;
 
+import lombok.RequiredArgsConstructor;
 import woowacourse.auth.ui.AuthenticationPrincipalArgumentResolver;
 import woowacourse.auth.application.AuthService;
 import org.springframework.context.annotation.Bean;
@@ -9,12 +10,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class AuthenticationPrincipalConfig implements WebMvcConfigurer {
     private final AuthService authService;
-
-    public AuthenticationPrincipalConfig(AuthService authService) {
-        this.authService = authService;
-    }
 
     @Override
     public void addArgumentResolvers(List argumentResolvers) {

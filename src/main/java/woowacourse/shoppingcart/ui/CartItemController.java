@@ -12,7 +12,7 @@ import woowacourse.shoppingcart.application.CartService;
 import java.net.URI;
 import java.util.List;
 
-@RestController
+//@RestController
 @RequestMapping("/api/customers/{customerName}/carts")
 public class CartItemController {
     private final CartService cartService;

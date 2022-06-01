@@ -7,7 +7,7 @@ import woowacourse.shoppingcart.exception.InvalidCustomerException;
 
 import java.util.Locale;
 
-@Repository
+//@Repository
 public class CustomerDao {
 
     private final JdbcTemplate jdbcTemplate;

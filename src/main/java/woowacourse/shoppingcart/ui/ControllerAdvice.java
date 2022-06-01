@@ -13,7 +13,7 @@ import woowacourse.shoppingcart.exception.*;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class ControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)

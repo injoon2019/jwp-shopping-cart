@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @Validated
-@RestController
+//@RestController
 @RequestMapping("/api/customers/{customerName}/orders")
 public class OrderController {
     private final OrderService orderService;
